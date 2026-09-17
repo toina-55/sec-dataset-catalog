@@ -1,17 +1,17 @@
-"""데이터셋 17종 받는 단일 진입점 — 어느 것이든 여기서 받는다.
+"""데이터셋 17종 받는 단일 진입점 — 어느 것이든 여기서 받습니다.
 
     uv run python fetch.py --list              # 17종 목록 + 용량
     uv run python fetch.py nasa loghub         # 골라서
     uv run python fetch.py --group 메일        # 묶음으로
-    uv run python fetch.py --all               # 전부 (약 11.3 GB, 확인을 묻는다)
+    uv run python fetch.py --all               # 전부 (약 11.3 GB, 확인을 묻습니다)
     uv run python fetch.py nasa --dry-run      # 실행할 명령만 보기
 
-실제 다운로드는 `scripts/` 아래 6개 스크립트가 한다. 이 파일은 **어느 key가 어느
-스크립트의 어느 인자인지**만 알고 넘긴다 — 스크립트들은 각각 원출처(Zenodo · figshare ·
-AWS Open Data · GitHub raw)의 사정이 달라 한 파일로 합치면 읽기 어려워진다.
+실제 다운로드는 `scripts/` 아래 6개 스크립트가 합니다. 이 파일은 **어느 key가 어느
+스크립트의 어느 인자인지**만 알고 넘깁니다 — 스크립트들은 각각 원출처(Zenodo · figshare ·
+AWS Open Data · GitHub raw)의 사정이 달라 한 파일로 합치면 읽기 어려워집니다.
 
 받은 파일은 전부 `data/` 아래에 쌓이고, 모든 스크립트가 캐시 우선이라 다시 실행해도
-이미 받은 건 건너뛴다.
+이미 받은 건 건너뜁니다.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parent
 SCRIPTS = ROOT / "scripts"
 
 # key: (이름, 묶음, 내려받는 용량 GB, 라이선스, 스크립트, 인자)
-#   "multi": 같은 스크립트에 key를 여러 개 붙여 한 번에 실행할 수 있다
+#   "multi": 같은 스크립트에 key를 여러 개 붙여 한 번에 실행할 수 있습니다
 REGISTRY = {
     "cicids2017": {
         "name": "CIC-IDS2017", "group": "네트워크", "gb": 0.37,
@@ -111,12 +111,12 @@ def show_list() -> None:
         print()
     total = sum(s["gb"] for s in REGISTRY.values())
     print(f"  전부 받으면 약 {total:.1f} GB\n")
-    print("  🟡 피드형(phishtank · tranco)은 받을 때마다 값이 다르다 — 인용 시 수신 날짜 병기")
-    print("  ⚠️ cert는 받는 쪽(kilthub)에서 별도 최종사용자 동의를 거친다\n")
+    print("  🟡 피드형(phishtank · tranco)은 받을 때마다 값이 다릅니다 — 인용 시 수신 날짜를 병기해 주세요")
+    print("  ⚠️ cert는 받는 쪽(kilthub)에서 별도 최종사용자 동의를 거칩니다\n")
 
 
 def plan(keys: list[str]) -> list[tuple[str, list[str]]]:
-    """key 목록을 실제 실행할 (스크립트, 인자) 목록으로 바꾼다. 같은 스크립트는 묶는다."""
+    """key 목록을 실제 실행할 (스크립트, 인자) 목록으로 바꿉니다. 같은 스크립트는 묶습니다."""
     calls: list[tuple[str, list[str]]] = []
     for key in keys:
         s = REGISTRY[key]
@@ -138,12 +138,12 @@ def plan(keys: list[str]) -> list[tuple[str, list[str]]]:
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("keys", nargs="*", help="받을 데이터셋 key (--list 로 확인)")
+    ap.add_argument("keys", nargs="*", help="받을 데이터셋 key (--list 로 확인하세요)")
     ap.add_argument("--all", action="store_true", help="17종 전부 (약 11.3 GB)")
     ap.add_argument("--group", action="append", metavar="이름",
                     help=f"묶음 단위로 받기: {' · '.join(GROUPS)}")
     ap.add_argument("--list", action="store_true", help="받지 않고 목록만")
-    ap.add_argument("--dry-run", action="store_true", help="실행할 명령만 보여준다")
+    ap.add_argument("--dry-run", action="store_true", help="실행할 명령만 보여줍니다")
     ap.add_argument("-y", "--yes", action="store_true", help="용량 확인 질문 건너뛰기")
     args = ap.parse_args()
 
@@ -167,7 +167,7 @@ def main() -> int:
 
     unknown = [k for k in keys if k not in REGISTRY]
     if unknown:
-        print(f"🔴 모르는 key: {', '.join(unknown)}  (--list 로 확인)", file=sys.stderr)
+        print(f"🔴 모르는 key: {', '.join(unknown)}  (--list 로 확인하세요)", file=sys.stderr)
         return 2
 
     seen: dict[str, None] = dict.fromkeys(keys)   # 중복 제거, 순서 유지
@@ -187,11 +187,11 @@ def main() -> int:
 
     if total >= 1.0 and not args.yes:
         try:
-            answer = input(f"\n{total:.1f} GB를 받는다. 계속할까? [y/N] ").strip().lower()
+            answer = input(f"\n{total:.1f} GB를 받습니다. 계속할까요? [y/N] ").strip().lower()
         except EOFError:
             answer = ""
         if answer not in ("y", "yes"):
-            print("중단했다.")
+            print("중단했습니다.")
             return 1
 
     failed: list[str] = []
@@ -204,7 +204,7 @@ def main() -> int:
 
     if failed:
         print(f"\n🔴 {len(failed)}개 실패: {', '.join(failed)} — 다시 실행하면 "
-              f"받은 것은 건너뛰고 실패한 것만 다시 받는다", file=sys.stderr)
+              f"받은 건 건너뛰고 실패한 것만 다시 받습니다", file=sys.stderr)
         return 1
     print(f"\n✅ 끝. 받은 곳: {ROOT / 'data'}")
     return 0
