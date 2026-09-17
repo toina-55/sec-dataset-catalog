@@ -12,9 +12,9 @@
    타임스탬프가 없다 — 행 번호가 곧 시간이다.
 
 사용:
-    uv run python 시나리오/fetch_smd.py --list    # 목록만
-    uv run python 시나리오/fetch_smd.py           # 28대 전부 (약 0.49 GB)
-    uv run python 시나리오/fetch_smd.py --machines machine-1-1,machine-2-3
+    uv run python scripts/fetch_smd.py --list    # 목록만
+    uv run python scripts/fetch_smd.py           # 28대 전부 (약 0.49 GB)
+    uv run python scripts/fetch_smd.py --machines machine-1-1,machine-2-3
 """
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ def _write_source_note() -> None:
         "| `test/` | 이상이 섞인 구간 |\n"
         "| `test_label/` | test와 같은 길이, 0/1 |\n"
         "| `interpretation_label/` | `<시작>-<끝>:<지표번호,...>` — 이상 구간마다 원인 지표 |\n\n"
-        "> 받은 방법: `uv run python 시나리오/fetch_smd.py`\n",
+        "> 받은 방법: `uv run python scripts/fetch_smd.py`\n",
         encoding="utf-8")
 
 

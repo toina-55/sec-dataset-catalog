@@ -1,10 +1,17 @@
-"""공개 데이터 확보 — 캐시 우선.
+"""피싱 URL 피드 2종 확보 — PhishTank · Tranco, 캐시 우선.
 
 PhishTank 벌크 CSV는 익명 다운로드가 되지만 **rate limit이 빡빡하다**(429).
 이미 받아둔 파일이 있으면 절대 다시 받지 않는다.
+
+🟡 **둘 다 받을 때마다 값이 다르다.** 인용할 때 수신 날짜를 병기해야 한다.
+
+사용:
+    uv run python scripts/fetch_phishing_feeds.py --list   # 목록만
+    uv run python scripts/fetch_phishing_feeds.py          # 둘 다 받기
 """
 from __future__ import annotations
 
+import argparse
 import io
 import sys
 import zipfile
@@ -53,8 +60,20 @@ def fetch(name: str, url: str) -> Path:
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--list", action="store_true", help="내려받지 않고 목록만")
+    args = ap.parse_args()
+
+    if args.list:
+        print(f"\n데이터 위치: {DATA}\n")
+        for name, url in SOURCES.items():
+            print(f"  {name:<16} <- {url}")
+        print("\n🟡 받을 때마다 값이 다르다 — 인용 시 수신 날짜 병기\n")
+        return 0
+
     DATA.mkdir(exist_ok=True)
-    print("공개 데이터 확보")
+    print("피싱 URL 피드 확보 (PhishTank · Tranco)")
     ok = True
     for name, url in SOURCES.items():
         try:
@@ -65,12 +84,8 @@ def main() -> int:
     return 0 if ok else 1
 
 
+# UCI SMS Spam(228번)은 원래 이 파일 아래에 미사용 상수로 남아 있었다.
+# 지금은 `scripts/fetch_mail.py sms-spam`이 받는다.
+
 if __name__ == "__main__":
     raise SystemExit(main())
-
-# 추가 데이터 (2026-08-27)
-#   sms-spam.tsv — UCI SMS Spam Collection 228번. 5,574건, 라벨+텍스트 2열.
-#   Kaggle 미러는 로그인이 필요하지만 UCI 원본은 인증 없이 받힌다.
-EXTRA = {
-    "sms-spam.tsv": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
-}

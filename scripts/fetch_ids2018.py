@@ -10,9 +10,9 @@ CIC-IDS2017이 못 주던 **분산(N:N) 공격 표본**과 **목적지 장비 �
    그날이 마침 **DDoS-LOIC-HTTP · DDoS-LOIC-UDP** 날이라 분산 공격이 들어 있다.
 
 사용:
-    uv run python 시나리오/fetch_ids2018.py --list     # 목록만 (IP 열 유무 표시)
-    uv run python 시나리오/fetch_ids2018.py            # 기본 1개 (약 4.05 GB)
-    uv run python 시나리오/fetch_ids2018.py --all      # 🔴 10개 전부 (약 6.89 GB)
+    uv run python scripts/fetch_ids2018.py --list     # 목록만 (IP 열 유무 표시)
+    uv run python scripts/fetch_ids2018.py            # 기본 1개 (약 4.05 GB)
+    uv run python scripts/fetch_ids2018.py --all      # 🔴 10개 전부 (약 6.89 GB)
 """
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def _write_source_note(got: list[str]) -> None:
         "🔴 **가공본 CSV 10개 중 `Thuesday-20-02-2018` 하나에만 IP 열이 있다.** "
         "나머지는 `Dst Port`부터 시작해서 출발지 기준 집계를 할 수 없다.\n\n"
         f"받은 파일: {', '.join(got)}\n\n"
-        "> 받은 방법: `uv run python 시나리오/fetch_ids2018.py`\n",
+        "> 받은 방법: `uv run python scripts/fetch_ids2018.py`\n",
         encoding="utf-8")
 
 

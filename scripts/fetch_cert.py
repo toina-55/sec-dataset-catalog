@@ -10,9 +10,9 @@ CMU/SEI가 낸 내부자 위협 합성 데이터셋이다. 릴리스(r1 ~ r6.2)�
    못 쟀다. r4.2가 그 둘과 **정답 라벨**을 함께 준다.
 
 사용:
-    uv run python 시나리오/fetch_cert.py --list          # 목록만
-    uv run python 시나리오/fetch_cert.py                 # 기본 r4.2 + answers
-    uv run python 시나리오/fetch_cert.py r4.2 --with-http  # 🔴 http.csv까지 (전개 용량 큼)
+    uv run python scripts/fetch_cert.py --list          # 목록만
+    uv run python scripts/fetch_cert.py                 # 기본 r4.2 + answers
+    uv run python scripts/fetch_cert.py r4.2 --with-http  # 🔴 http.csv까지 (전개 용량 큼)
 """
 from __future__ import annotations
 
@@ -135,7 +135,7 @@ def _write_source_note() -> None:
         "| `r1/` | 1,000명 · 18개월. http · logon · device · LDAP. 🔴 **정답 없음** |\n"
         "| `r4.2/` | 1,000명 · 17개월. + **file.csv**(파일 복사 내용) · **email.csv**(수신자·크기·첨부). "
         "✅ 정답은 `answers/`에 있다 |\n\n"
-        "> 받은 방법: `uv run python 시나리오/fetch_cert.py`\n"
+        "> 받은 방법: `uv run python scripts/fetch_cert.py`\n"
         "> 기본값은 `http.csv`를 빼고 전개한다(전개 용량이 가장 크고 요건 4에서 안 쓴다). "
         "필요하면 `--with-http`.\n",
         encoding="utf-8")

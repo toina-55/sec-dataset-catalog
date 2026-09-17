@@ -11,11 +11,11 @@ wheeler · wilson)에서 나왔고, 가공 단계만 다르다.
    이 프로젝트는 유상 용역이므로 기본값은 **CC BY 셋만** 받는다.
 
 사용:
-    uv run python 시나리오/fetch_ait.py                # 기본 3종 (약 1.0 GB)
-    uv run python 시나리오/fetch_ait.py nds            # 하나만
-    uv run python 시나리오/fetch_ait.py nds --testbed fox,wilson
-    uv run python 시나리오/fetch_ait.py --list         # 내려받지 않고 목록만
-    uv run python 시나리오/fetch_ait.py lds --allow-nc # 🔴 비영리 데이터
+    uv run python scripts/fetch_ait.py                # 기본 3종 (약 1.0 GB)
+    uv run python scripts/fetch_ait.py nds            # 하나만
+    uv run python scripts/fetch_ait.py nds --testbed fox,wilson
+    uv run python scripts/fetch_ait.py --list         # 내려받지 않고 목록만
+    uv run python scripts/fetch_ait.py lds --allow-nc # 🔴 비영리 데이터
 """
 from __future__ import annotations
 
@@ -180,7 +180,7 @@ def _write_source_note(root: Path, spec: dict) -> None:
         f"- **인용**: {spec['cite']}\n"
         f"- **관련 요건**: {spec['요건']}\n\n"
         f"{spec['왜']}\n\n"
-        f"> 받은 방법: `uv run python 시나리오/fetch_ait.py`\n",
+        f"> 받은 방법: `uv run python scripts/fetch_ait.py`\n",
         encoding="utf-8")
 
 
