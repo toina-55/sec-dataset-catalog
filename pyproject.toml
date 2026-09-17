@@ -1,0 +1,8 @@
+[project]
+name = "sec-dataset-catalog"
+version = "0.1.0"
+description = "보안 로그·이상탐지 연구용 공개 데이터셋 카탈로그 + 받는 스크립트 (데이터 파일 자체는 재배포하지 않음)"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32",
+]
