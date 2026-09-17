@@ -8,7 +8,7 @@
 - ❌ **데이터 파일 자체는 커밋·재배포하지 않는다.** `scripts/`의 스크립트가 각자 원출처(Zenodo·GitHub·AWS Open Data 등)에서 직접 받아온다 — 이 저장소는 "어디서 어떻게 받는지"만 알려준다
 - ⚠️ 라이선스는 **원출처 기준**이다. 아래 표의 라이선스 표기를 반드시 확인하고, 상업적 이용이 걸린 경우 원문 약관을 직접 재확인할 것
 
-## 카탈로그 (18종)
+## 카탈로그 (17종)
 
 받는 명령은 전부 저장소 루트에서 `uv run python scripts/<명령>` 형태로 실행한다. 받은 파일은 `data/` 아래에 쌓이고, 캐시 우선이라 다시 실행해도 이미 있는 건 건너뛴다.
 
@@ -31,9 +31,8 @@
 | **UCI SMS Spam** | 문자 스팸/정상 | 5,574건 | ✅ 이진 | CC BY 4.0 | `fetch_mail.py sms-spam` |
 | **PhishTank** | 피싱 URL 피드 | 7.3만 행 | ✅ | 공개 (rate limit) | `fetch_phishing_feeds.py` |
 | **Tranco top-1m** | 도메인 인기 순위 | 100만 | — | 공개 | `fetch_phishing_feeds.py` |
-| **Splunk MLTK lookups** | 예제 lookup 51종 | — | 일부 | ⚠️ Splunk 앱 라이선스 하위 | 🔴 **스크립트 없음** — Splunkbase 앱 설치 |
 
-> 🔴 **스크립트가 없는 건 Splunk MLTK 하나뿐이다.** 앱 안에 동봉된 파일이라 앱 설치 경로로만 접근하는 게 라이선스상 맞다.
+> **17종 전부 스크립트로 받는다.** 브라우저로 직접 받아야 하는 것은 없다.
 >
 > 🟡 **피드형(PhishTank · Tranco)은 받을 때마다 값이 다르다.** 인용할 때 수신 날짜를 병기해야 한다.
 
@@ -211,29 +210,7 @@ Apache SpamAssassin 프로젝트의 정상 메일(ham) 세트. 피싱과 맞댈 
 - **받는 법**: `uv run python scripts/fetch_phishing_feeds.py`
 - **주의**: 🟡 매일 갱신된다
 
----
-
-## Splunk 관련
-
-### Splunk Machine Learning Toolkit (MLTK) — lookups
-Splunk 공식 MLTK 앱에 예제·튜토리얼용으로 동봉된 lookup 51종(보안·IT운영·일반 비즈니스 지표 혼합).
-- **출처**: Splunk MLTK 앱 (Splunkbase, 무료)
-- **라이선스**: ⚠️ **Splunk 앱 라이선스 하위** — 앱 자체를 Splunkbase에서 받아 설치하는 방식으로만 접근할 것을 권한다. 이 저장소는 lookup 파일을 별도로 재배포하지 않는다
-- **받는 법**: 🔴 **스크립트 없음.** Splunkbase에서 Machine Learning Toolkit 앱 설치 → `$SPLUNK_HOME/etc/apps/Splunk_ML_Toolkit/lookups/`
-
----
-
-## 검토했으나 포함하지 않음
-
-| 데이터셋 | 사유 |
-| --- | --- |
-| **ThreatFox** (abuse.ch) | API는 "fair use 무료"만 명시, 사이트 일반 약관엔 상업적 이용 금지 조항 — 라이선스가 불명확해 제외 |
-| **KISA WAF 침해사고 샘플** | 배포 조건 미기재, 접근 경로(배포처 URL) 미보존 — 재현 불가능해 제외. KISA C-TAS(ctas.krcert.or.kr) 가입 후 정식 경로로 재확인 가능 |
-| **AIT-LDS v2.1 (원본)** | **CC BY-NC-SA 4.0 (비영리)** — 상업적 이용 불가. 대신 파생본(AIT-NDS·AIT-ADS·CLUE-LDS, 전부 CC BY 4.0) 사용. `fetch_ait.py lds`로 받을 수는 있으나 기본값에서 뺐다 |
-| **AIT-LDS v1.1 / Kyoushi** | 구판 + 비영리 라이선스, 위와 동일 사유 |
-| **CAM-LDS** | CC BY 4.0으로 라이선스는 문제없으나, 정상 트래픽 시뮬레이션 없이 공격만 캡처돼 이상탐지 평가(기저율 필요)엔 부적합해 미확보 |
-
 ## 변경 이력
 
-- 2026-09-17: `fetch_weblogs.py`·`fetch_mail.py` 신설 — 카탈로그 표 추가하면서 "받는 법: 수동" 9건을 재확인한 결과, **원출처 직접 다운로드가 되는데 스크립트가 없었을 뿐**이었다. OWASP는 Zenodo `/records/` 경로만 403이고 API `/content` 경로는 열려 있다. CLUE-LDS는 `fetch_ait.py clue`로 이미 받을 수 있었는데 "수동"으로 잘못 적혀 있었다. Nazario 라이선스도 배포처 `LICENSE.txt` 확인 후 CC BY 4.0으로 정정. 스크립트 없이 남은 건 Splunk MLTK 하나. AIT-ADS 항목 추가(12 → 18종).
+- 2026-09-17: `fetch_weblogs.py`·`fetch_mail.py` 신설 — 카탈로그 표 추가하면서 "받는 법: 수동" 9건을 재확인한 결과, **원출처 직접 다운로드가 되는데 스크립트가 없었을 뿐**이었다. OWASP는 Zenodo `/records/` 경로만 403이고 API `/content` 경로는 열려 있다. CLUE-LDS는 `fetch_ait.py clue`로 이미 받을 수 있었는데 "수동"으로 잘못 적혀 있었다. Nazario 라이선스도 배포처 `LICENSE.txt` 확인 후 CC BY 4.0으로 정정. AIT-ADS 항목 추가. **스크립트로 못 받는 Splunk MLTK(앱 동봉 파일)와 "검토했으나 포함하지 않음" 목록은 뺐다** — 이 저장소는 받을 수 있는 것만 싣는다(17종).
 - 2026-09-17: 신설. `kbdc-poc` 프로젝트에서 실사용 검증된 데이터셋 카탈로그를 분리 — 데이터 파일 자체는 옮기지 않고 카탈로그+fetch 스크립트만 공개.
