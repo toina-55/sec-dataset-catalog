@@ -39,7 +39,7 @@
 ## 시작하기
 
 ```bash
-git clone https://github.com/lamacodes/sec-dataset-catalog
+git clone https://github.com/toina-55/sec-dataset-catalog
 cd sec-dataset-catalog
 uv sync
 
